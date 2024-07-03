@@ -15,7 +15,7 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/CardScreen',
-      builder: (context, state) => const CardsScreens(),
+      builder: (context, state) => CardScreen(),
     ),
     GoRoute(
       path: '/QuizScreen',

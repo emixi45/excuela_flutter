@@ -10,7 +10,7 @@ class QuizCubit extends Cubit<QuizState> {
 
   void validAnswer() {
     emit(state.copyWith(isCorrectAnswer: true));
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 1), () {
       if (state.currentQuestion != 2) {
         emit(state.copyWith(
             isCorrectAnswer: false,

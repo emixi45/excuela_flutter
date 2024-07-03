@@ -1,4 +1,6 @@
+import 'package:excuela/config/blocs/card_cubit/card_cubit.dart';
 import 'package:excuela/config/blocs/progress_cubit/progress_cubit.dart';
+import 'package:excuela/config/blocs/quiz_cubit/quiz_cubit.dart';
 import 'package:excuela/config/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +16,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProgressCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProgressCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CardCubit(),
+        ),
+        BlocProvider(
+          create: (context) => QuizCubit(),
+        ),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: appRouter,
