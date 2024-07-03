@@ -1,4 +1,4 @@
-import 'package:excuela/config/blocs/progressCubit/progress_cubit_cubit.dart';
+import 'package:excuela/config/blocs/progress_cubit/progress_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +17,8 @@ class Progressscreen extends StatelessWidget {
         ),
       ),
       body: Container(
-          color: Color.fromARGB(255, 8, 35, 39), child: const _ProgresView()),
+          color: const Color.fromARGB(255, 8, 35, 39),
+          child: const _ProgresView()),
     );
   }
 }
@@ -25,49 +26,65 @@ class Progressscreen extends StatelessWidget {
 // Ajusta la importación según donde tengas definido ProgressCubit
 
 class _ProgresView extends StatelessWidget {
-  const _ProgresView({
-    super.key,
-  });
+  const _ProgresView();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (_) async {
         BlocProvider.of<ProgressCubit>(context).reset();
-        return true;
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const SizedBox(height: 30),
-          const Text(
-            'Circular progress',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          Column(
+            children: [
+              const SizedBox(height: 30),
+              const Text(
+                'Circular progress',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.4,
+                height: MediaQuery.of(context).size.width * 0.4,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
-          const SizedBox(height: 10),
-          const CircularProgressIndicator(
-            strokeWidth: 2,
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'Circular lineal controlado',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          BlocBuilder<ProgressCubit, double>(
-            builder: (context, state) {
-              return _CircularControlled(progressValue: state ?? 0);
-            },
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          FloatingActionButton(
-            elevation: 10,
-            backgroundColor: Colors.tealAccent,
-            child: const Text('Iniciar'),
-            onPressed: () {
-              BlocProvider.of<ProgressCubit>(context).startProgress();
-            },
-          ),
+          Column(
+            children: [
+              const Text(
+                'Circular lineal controlado',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              BlocBuilder<ProgressCubit, double>(
+                builder: (context, state) {
+                  return _CircularControlled(progressValue: state);
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    child: const Text('Iniciar'),
+                    onPressed: () {
+                      BlocProvider.of<ProgressCubit>(context).startProgress();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -86,9 +103,13 @@ class _CircularControlled extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
-            strokeWidth: 2,
-            value: progressValue,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            height: MediaQuery.of(context).size.width * 0.4,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              value: progressValue,
+            ),
           ),
         ],
       ),

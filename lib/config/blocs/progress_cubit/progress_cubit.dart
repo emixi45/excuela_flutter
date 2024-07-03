@@ -9,7 +9,6 @@ class ProgressCubit extends Cubit<double> {
 
   void startProgress() {
     reset();
-    _progressSubscription?.cancel();
     _progressSubscription =
         Stream.periodic(const Duration(milliseconds: 300), (value) {
       return (value * 2) / 100;

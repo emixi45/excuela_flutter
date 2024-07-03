@@ -1,4 +1,4 @@
-import 'package:excuela/config/blocs/Countercubit/counter_cubit.dart';
+import 'package:excuela/config/blocs/quiz_cubit/quiz_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,67 +7,89 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (_) => CounterCubit(), child: _CubitView());
+    return BlocProvider(create: (_) => QuizCubit(), child: const _CubitView());
   }
 }
 
 class _CubitView extends StatelessWidget {
-  const _CubitView({
-    super.key,
-  });
+  const _CubitView();
 
   @override
   Widget build(BuildContext context) {
-    final counterState = context.watch<CounterCubit>().state;
-
     return Scaffold(
       appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: const Color.fromARGB(255, 15, 15, 15),
-          title: Text(
-            'Widget Quiz  ${counterState.transactionCount}',
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () => {context.read<CounterCubit>().reset()},
-              icon: const Icon(
-                Icons.refresh,
-              ),
-            ),
-          ]),
-      body: BlocBuilder<CounterCubit, CounterState>(
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: const Color.fromARGB(255, 15, 15, 15),
+        title: const Text(
+          'Pregunta numero',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(255, 8, 35, 39),
+      body: BlocBuilder<QuizCubit, QuizState>(
         builder: (context, state) {
-          return Container(
-            color: const Color.fromARGB(255, 8, 35, 39),
-            child: Center(
-              child: Text(
-                'counter value ${state.counter}',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      child: Text(state.questions[state.currentQuestion]),
+                    ),
+                    const Spacer(),
+                    ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => ListTile(
+                              onTap: () {
+                                if (state.answers[
+                                        state.questions[state.currentQuestion]]!
+                                    .elementAt(index)
+                                    .valid) {
+                                  BlocProvider.of<QuizCubit>(context)
+                                      .validAnswer();
+                                }
+                              },
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16))),
+                              tileColor: Colors.white,
+                              title: Text(
+                                state.answers[
+                                        state.questions[state.currentQuestion]]!
+                                    .elementAt(index)
+                                    .answer,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 16,
+                            ),
+                        itemCount: 4)
+                  ],
+                ),
               ),
-            ),
+              if (state.isCorrectAnswer != null)
+                Center(
+                    child: AnimatedSwitcher(
+                  duration: const Duration(seconds: 1),
+                  child: state.isCorrectAnswer!
+                      ? const Icon(
+                          Icons.check,
+                          size: 105,
+                          color: Colors.green,
+                        )
+                      : const SizedBox.shrink(),
+                )),
+            ],
           );
         },
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-              heroTag: '1',
-              child: Text('+1'),
-              onPressed: () => {context.read<CounterCubit>().increaseBy(1)}),
-          const SizedBox(height: 10),
-          FloatingActionButton(
-              heroTag: '2',
-              child: Text('+2'),
-              onPressed: () => {context.read<CounterCubit>().increaseBy(2)}),
-          const SizedBox(height: 10),
-          FloatingActionButton(
-              heroTag: '3',
-              child: Text('+3'),
-              onPressed: () => {context.read<CounterCubit>().increaseBy(3)}),
-        ],
       ),
     );
   }

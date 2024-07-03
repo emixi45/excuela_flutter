@@ -1,4 +1,4 @@
-import 'package:excuela/config/blocs/progressCubit/progress_cubit_cubit.dart';
+import 'package:excuela/config/blocs/progress_cubit/progress_cubit.dart';
 import 'package:excuela/config/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
