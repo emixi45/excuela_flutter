@@ -41,6 +41,12 @@ class CardScreen extends StatelessWidget {
                         child: ListTile(
                           title: Text(card.title),
                           subtitle: Text(card.description),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              context.read<CardCubit>().removeCard(card);
+                            },
+                          ),
                         ),
                       );
                     },

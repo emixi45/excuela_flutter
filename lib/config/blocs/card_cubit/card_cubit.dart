@@ -1,4 +1,5 @@
 import 'package:excuela/config/models/card_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CardCubit extends Cubit<List<CardModel>> {
@@ -6,5 +7,9 @@ class CardCubit extends Cubit<List<CardModel>> {
 
   void addCard(CardModel card) {
     emit([...state, card]);
+  }
+
+  void removeCard(CardModel card) {
+    emit(state.where((element) => element != card).toList());
   }
 }
