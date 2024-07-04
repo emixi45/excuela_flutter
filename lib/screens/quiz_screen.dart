@@ -41,7 +41,11 @@ class _CubitView extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(16))),
-                      child: Text(state.questions[state.currentQuestion]),
+                      child: Text(
+                        state.questions[state.currentQuestion],
+                        style: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     const Spacer(),
                     ListView.separated(
