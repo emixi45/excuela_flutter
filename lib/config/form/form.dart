@@ -31,29 +31,56 @@ class _CardFormState extends State<CardForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
-            controller: _titleController,
-            decoration: InputDecoration(labelText: 'Title'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a title';
-              }
-              return null;
-            },
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'Title',
+                labelStyle: TextStyle(color: Colors.lightGreen),
+              ),
+              style: const TextStyle(
+                  color: Colors
+                      .white), // Aquí se cambia el color del texto a blanco
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a title';
+                }
+                return null;
+              },
+            ),
           ),
-          TextFormField(
-            controller: _descriptionController,
-            decoration: InputDecoration(labelText: 'Description'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a description';
-              }
-              return null;
-            },
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: TextFormField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                labelStyle: TextStyle(color: Colors.lightGreen),
+              ),
+              style: const TextStyle(
+                  color: Colors
+                      .white), // Aquí se cambia el color del texto a blanco
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a description';
+                }
+                return null;
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 20,
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.lightGreen,
+            ),
             onPressed: _submitForm,
-            child: Text('Add Card'),
+            child: const Text(
+              'Add Card',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),

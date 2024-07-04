@@ -48,13 +48,12 @@ class _CubitView extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) => ListTile(
                               onTap: () {
-                                if (state.answers[
+                                bool isValid = state.answers[
                                         state.questions[state.currentQuestion]]!
                                     .elementAt(index)
-                                    .valid) {
-                                  BlocProvider.of<QuizCubit>(context)
-                                      .validAnswer();
-                                }
+                                    .valid;
+                                BlocProvider.of<QuizCubit>(context)
+                                    .validAnswer(isValid);
                               },
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
@@ -85,7 +84,11 @@ class _CubitView extends StatelessWidget {
                           size: 105,
                           color: Colors.green,
                         )
-                      : const SizedBox.shrink(),
+                      : const Icon(
+                          Icons.dangerous,
+                          size: 105,
+                          color: Colors.red,
+                        ),
                 )),
             ],
           );

@@ -1,20 +1,19 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:excuela/config/models/answers_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'quiz_state.dart';
 
 class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizState());
 
-  void validAnswer() {
-    emit(state.copyWith(isCorrectAnswer: true));
+  void validAnswer(bool isValid) {
+    emit(state.copyWith(isCorrectAnswer: isValid));
     Timer(const Duration(seconds: 1), () {
       if (state.currentQuestion != 2) {
         emit(state.copyWith(
-            isCorrectAnswer: false,
-            currentQuestion: state.currentQuestion + 1));
+            isCorrectAnswer: null, currentQuestion: state.currentQuestion + 1));
       } else {
         reset();
       }
