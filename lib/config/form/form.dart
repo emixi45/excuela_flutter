@@ -4,11 +4,13 @@ import 'package:excuela/config/models/card_model.dart';
 import 'package:flutter/material.dart';
 
 class CardForm extends StatefulWidget {
+  const CardForm({super.key});
+
   @override
-  _CardFormState createState() => _CardFormState();
+  CardFormState createState() => CardFormState();
 }
 
-class _CardFormState extends State<CardForm> {
+class CardFormState extends State<CardForm> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();

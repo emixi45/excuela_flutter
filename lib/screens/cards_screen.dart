@@ -48,7 +48,7 @@ class CardScreen extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          CardForm(),
+          const CardForm(),
           Expanded(
             child: BlocBuilder<CardCubit, List<CardModel>>(
               builder: (context, cards) {
